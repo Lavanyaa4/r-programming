@@ -1,0 +1,38 @@
+library(readr)
+library(plyr)
+df <- read_csv("stroke.csv", col_types = cols(...6 = col_skip(), 
+                                                  bmi = col_number()))
+View(df)
+summary(df)
+install.packages("dplyr")
+library(dplyr)
+str(df)
+summarise(df,mean(avg_glucose_level))
+unique(df["age"])
+colSums(is.na(df))
+df["bmi"][is.na(df["bmi"])] <- 28
+df$bmi[is.na(df$bmi)] <- sapply(df$bmi, median, na.rm = TRUE)
+df$bmi
+View(df)
+install.packages("lattice")
+library(lattice)
+histogram(~age,data=df,breaks=20)
+histogram(~hypertension,data=df,breaks=20)
+histogram(~heart_disease,data=df,breaks=20)
+histogram(~bmi,data=df)
+histogram(~age|gender,data=df,breaks=50)
+histogram(~age|hypertension,data=df,breaks=20)
+histogram(~bmi,data=df)
+bwplot(~age,data = df)
+bwplot(~avg_glucose_level,data = df)
+bwplot(~bmi,data=df)
+xyplot(bmi~age,data=df)
+xyplot(avg_glucose_level~age,data=df)
+df1=subset(df,stroke==1)
+df1
+histogram(~age|smoking_status,data=df1,breaks=20)
+count(df1,"smoking_status")
+df2=subset(df1,smoking_status=="never smoked")
+count(df2,"work_type")
+
+
